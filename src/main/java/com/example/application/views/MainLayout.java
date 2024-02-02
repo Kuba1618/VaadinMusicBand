@@ -1,7 +1,10 @@
 package com.example.application.views;
 
-import com.example.application.views.about.AboutView;
-import com.example.application.views.helloworld.HelloWorldView;
+import com.example.application.views.live.LiveView;
+import com.example.application.views.song.dedication.DedicationsView;
+import com.example.application.views.song.songview.AddSongView;
+import com.example.application.views.speeddial.SpeedDialView;
+import com.example.application.views.song.songview.TuningFork;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;
@@ -12,17 +15,16 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.server.WebBrowser;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
 public class MainLayout extends AppLayout {
-
     private H2 viewTitle;
 
     public MainLayout() {
+
         setPrimarySection(Section.DRAWER);
         addDrawerContent();
         addHeaderContent();
@@ -39,28 +41,37 @@ public class MainLayout extends AppLayout {
     }
 
     private void addDrawerContent() {
-        H1 appName = new H1("MusicBand");
+        H1 appName = new H1("Music Band App");
         appName.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
         Header header = new Header(appName);
 
         Scroller scroller = new Scroller(createNavigation());
-
         addToDrawer(header, scroller, createFooter());
     }
 
     private SideNav createNavigation() {
+
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Hello World", HelloWorldView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
-        nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new SideNavItem("Add Song", AddSongView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
+        nav.addItem(new SideNavItem("Live View", LiveView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
+        nav.addItem(new SideNavItem("Dedications", DedicationsView.class,LineAwesomeIcon.GLOBE_SOLID.create()));
+        nav.addItem(new SideNavItem("Speed Dial View", SpeedDialView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
+        nav.addItem(new SideNavItem("TuningFork", TuningFork.class, LineAwesomeIcon.GLOBE_SOLID.create()));
+
+        String deviceType = isMobileDevice()? "mobile" : "responsive";
+        nav.getElement().getThemeList().add(deviceType);
 
         return nav;
     }
 
-    private Footer createFooter() {
-        Footer layout = new Footer();
+    public static boolean isMobileDevice() {
+        WebBrowser webBrowser = VaadinSession.getCurrent().getBrowser();
+        return webBrowser.isAndroid() || webBrowser.isIPhone() || webBrowser.isWindowsPhone();
+    }
 
-        return layout;
+    private Footer createFooter() {
+        return new Footer();
     }
 
     @Override

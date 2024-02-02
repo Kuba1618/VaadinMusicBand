@@ -1,17 +1,12 @@
 package com.example.application;
 
+import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
+import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.server.WebBrowser;
 import com.vaadin.flow.theme.Theme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-/**
- * The entry point of the Spring Boot application.
- *
- * Use the @PWA annotation make the application installable on phones, tablets
- * and some desktop browsers.
- *
- */
 @SpringBootApplication
 @Theme(value = "band-app")
 public class Application implements AppShellConfigurator {
